@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { withRouter } from 'react-router'
 
-import { Footer, Header } from './lib'
+import { Footer, Header } from "./lib"
+import { useWeb3React } from "@web3-react/core"
+import { useDispatch } from "react-redux"
+import { setEthereumAccount } from "../actions"
 
 function App(props) {
   const { children, location } = props
+
+  const dispatch = useDispatch()
+  const { account } = useWeb3React()
+
+  useEffect(() => {
+    dispatch(setEthereumAccount(account))
+  }, [account, dispatch])
 
   return (
     <div className="main">

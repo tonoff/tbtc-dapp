@@ -3,11 +3,13 @@ import { TBTCLoaded } from "../wrappers/web3"
 /** @typedef { import("@keep-network/tbtc.js").Redemption } Redemption */
 /** @typedef { import("@keep-network/tbtc.js").Deposit } Deposit */
 
-import { call, put, select } from 'redux-saga/effects'
+import { call, put, select, cancel } from 'redux-saga/effects'
 
 import { navigateTo } from '../lib/router/actions'
 import { DEPOSIT_RESOLVED } from "./deposit"
 import { logError } from "./lib"
+import { getTdtId } from "../lib/keeper-indexer"
+import {saveDepositAddress} from "../actions";
 
 export const UPDATE_ADDRESSES = 'UPDATE_ADDRESSES'
 export const UPDATE_TX_HASH = 'UPDATE_TX_HASH'
@@ -130,4 +132,14 @@ function* runRedemption(redemption) {
     } catch (error) {
         yield* logError(REDEMPTION_PROVE_BTC_TX_ERROR, error)
     }
+}
+
+export function* requestTdtAddress({ payload }) {
+  try {
+    const address = yield call(getTdtId, payload.lotSize)
+
+    yield put(saveDepositAddress(address))
+  } catch (e) {
+    yield cancel()
+  }
 }

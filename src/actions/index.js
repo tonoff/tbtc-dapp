@@ -1,5 +1,7 @@
 // Account setup.
-export const SET_ETHEREUM_ACCOUNT = 'SET_ETHEREUM_ACCOUNT'
+import { createAction } from "redux-actions"
+
+export const SET_ETHEREUM_ACCOUNT = "SET_ETHEREUM_ACCOUNT"
 
 export function setEthereumAccount(account) {
     return {
@@ -64,6 +66,8 @@ export function requestAvailableLotSizes() {
 
 export const SELECT_LOT_SIZE = 'SELECT_LOT_SIZE'
 
+export const SELECT_REDEEM_LOT_SIZE = "SELECT_REDEEM_LOT_SIZE"
+
 export function selectLotSize(lotSize) {
     return {
         type: SELECT_LOT_SIZE,
@@ -72,6 +76,17 @@ export function selectLotSize(lotSize) {
         },
     }
 }
+
+export function selectRedeemLotSize(lotSize) {
+  return {
+    type: SELECT_REDEEM_LOT_SIZE,
+    payload: {
+      lotSize,
+    },
+  }
+}
+
+export const saveDepositAddress = createAction("SAVE_DEPOSIT_ADDRESS")
 
 // Redemption
 export const SAVE_ADDRESSES = 'SAVE_ADDRESSES'

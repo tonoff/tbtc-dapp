@@ -41,6 +41,10 @@ let TBTCLoadedDeferred = new Deferred()
 export let Web3Loaded = Web3LoadedDeferred.promise
 export let TBTCLoaded = TBTCLoadedDeferred.promise
 
+// const isMainNet = async (web3) => {
+//   return "main" === (await web3.eth.net.getNetworkType())
+// }
+
 const initializeContracts = async (web3, connector, onTBTCLoaded) => {
     // Initialise default account.
     web3.eth.defaultAccount = await connector.getAccount()
@@ -50,7 +54,7 @@ const initializeContracts = async (web3, connector, onTBTCLoaded) => {
     console.debug(`netId: ${netId}\nchainId: ${chainId}`)
 
     Web3LoadedDeferred.resolve(web3)
-    
+
     const tbtc = await TBTC.withConfig({
         web3: web3,
         bitcoinNetwork: "testnet",
