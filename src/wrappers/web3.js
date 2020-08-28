@@ -1,13 +1,13 @@
-import React, { useEffect } from "react"
+import React, {useEffect} from "react"
 import Web3 from "web3"
-import TBTC, { EthereumHelpers, BitcoinHelpers } from "@keep-network/tbtc.js"
-import { Web3ReactProvider, useWeb3React } from "@web3-react/core"
-import { connect } from "react-redux"
-import { bindActionCreators } from "redux"
+import TBTC, {BitcoinHelpers} from "@keep-network/tbtc.js"
+import {useWeb3React, Web3ReactProvider} from "@web3-react/core"
+import {connect} from "react-redux"
+import {bindActionCreators} from "redux"
 import PropTypes from "prop-types"
 
 import config from "../config/config.json"
-import { tbtcLoaded } from "../actions"
+import {tbtcLoaded} from "../actions"
 
 /**
  * @typedef {Object} Deferred
@@ -42,6 +42,10 @@ const TBTCLoadedDeferred = new Deferred()
 export const Web3Loaded = Web3LoadedDeferred.promise
 export const TBTCLoaded = TBTCLoadedDeferred.promise
 
+const isMainNet = async (web3) => {
+  return "main" === (await web3.eth.net.getNetworkType())
+}
+
 const initializeContracts = async (web3, connector, onTBTCLoaded) => {
   // Initialise default account.
   web3.eth.defaultAccount = await connector.getAccount()
@@ -52,7 +56,7 @@ const initializeContracts = async (web3, connector, onTBTCLoaded) => {
 
   Web3LoadedDeferred.resolve(web3)
 
-  const tbtc = (await EthereumHelpers.isMainnet(web3))
+  const tbtc = (await isMainNet(web3))
     ? await TBTC.withConfig({
         web3: web3,
         bitcoinNetwork: BitcoinHelpers.Network.MAINNET,
