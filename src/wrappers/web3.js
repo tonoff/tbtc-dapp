@@ -1,13 +1,13 @@
-import React, {useEffect} from "react"
+import React, { useEffect } from "react"
 import Web3 from "web3"
-import TBTC, {BitcoinHelpers} from "@keep-network/tbtc.js"
-import {useWeb3React, Web3ReactProvider} from "@web3-react/core"
-import {connect} from "react-redux"
-import {bindActionCreators} from "redux"
+import TBTC, { BitcoinHelpers } from "@keep-network/tbtc.js"
+import { useWeb3React, Web3ReactProvider } from "@web3-react/core"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 import PropTypes from "prop-types"
 
 import config from "../config/config.json"
-import {tbtcLoaded} from "../actions"
+import { tbtcLoaded } from "../actions"
 
 /**
  * @typedef {Object} Deferred
