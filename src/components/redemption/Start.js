@@ -86,8 +86,9 @@ const StartFunc = ({
   const keeperAddress = useSelector((state) => state.redemption.depositAddress)
 
   useEffect(() => {
+    console.log(keeperAddress)
     deposit.onChange(keeperAddress || "")
-  }, [keeperAddress, deposit])
+  }, [keeperAddress, deposit.onChange])
 
   const selectLotSize = useCallback(
     (lotSize) => {
